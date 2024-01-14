@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExamplePanel - Homepage</title>
+    <style>
+        body {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .green { background-color: #2ecc71; color: #ecf0f1; }
+        .yellow { background-color: #f1c40f; color: #2c3e50; }
+        .red { background-color: #e74c3c; color: #ecf0f1; }
+
+        .console-container {
+            background-color: #34495e;
+            color: #ecf0f1;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 200px;
+            overflow-y: auto;
+            text-align: left;
+            font-family: monospace;
+        }
+
+        .command-input {
+            margin-top: 10px;
+            padding: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #2c3e50; /* Komut yazma satÄ±rÄ±nÄ±n arka plan rengi */
+            color: #ecf0f1; /* Komut yazma satÄ±rÄ±nÄ±n metin rengi */
+            border: none;
+            border-bottom: 2px solid #3498db; /* Komut yazma satÄ±rÄ±nÄ±n alt Ã§izgisi */
+            outline: none; /* Beyaz kenarlÄ±k */
+        }
+
+        .error-message {
+            color: #e74c3c;
+            margin-top: 5px;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const consoleContainer = document.querySelector('.console-container');
+            const commandInput = document.querySelector('.command-input');
+            const errorMessage = document.querySelector('.error-message');
+
+            function logToConsole(message) {
+                consoleContainer.innerHTML += `<p><span style="color: #3498db; font-weight: bold;">$Panel@console:</span> ${message}</p>`;
+                consoleContainer.scrollTop = consoleContainer.scrollHeight;
+            }
+            
+            function logOutput(message) {
+                consoleContainer.innerHTML += `<p><span style="color: #f6ee1d; font-weight: bold;">@output:</span> ${message}</p>`;
+                consoleContainer.scrollTop = consoleContainer.scrollHeight;
+            }
+
+            function logError(message) {
+                errorMessage.textContent = message;
+                setTimeout(() => {
+                    errorMessage.textContent = '';
+                }, 3000);
+            }
+            
+            function consoleHelpLists(){
+              return "ExamplePanel - console help list\n-start[alias:h] | desc: start bot"
+            }
+
+            document.querySelector('.green').addEventListener('click', function() {
+                logToConsole('START button clicked.');
+                // Burada START butonuna tÄ±klanÄ±nca yapÄ±lacak iÅlemleri ekleyebilirsiniz.
+            });
+
+            document.querySelector('.yellow').addEventListener('click', function() {
+                logToConsole('RESTART button clicked.');
+                // Burada RESTART butonuna tÄ±klanÄ±nca yapÄ±lacak iÅlemleri ekleyebilirsiniz.
+            });
+
+            document.querySelector('.red').addEventListener('click', function() {
+                logToConsole('CLOSE button clicked.');
+                // Burada CLOSE butonuna tÄ±klanÄ±nca yapÄ±lacak iÅlemleri ekleyebilirsiniz.
+            });
+
+            document.querySelector('.command-input').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    const command = commandInput.value.trim();
+                    
+                    // commands
+                    if (command == "start") {
+                        logToConsole(command);
+                        logOutput("project started")
+                        // Burada komut iÅlemlerini ekleyebilirsiniz.
+                        commandInput.value = ''; // Komut girildikten sonra alanÄ± temizle
+                    } 
+                    else if (command == "help" || command == "h"){
+                      logToConsole(command);
+                      logOutput(consoleHelpLists())
+                      commandInput.value = '';
+                    }
+                    else {
+                        logError('Invalid command. Please enter a valid command.');
+                    }
+                }
+            });
+
+            // Sayfa yÃ¼klendiÄinde otomatik bir mesaj ekleyebilirsiniz.
+            logToConsole('Welcome to ExamplePanel console!\nType \'help\' to view console commands.');
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1 style="color: #8b9496;">Panel</h1>
+    </header>
+    <main>
+        <div class="button-container">
+            <button class="button green">START</button>
+            <button class="button yellow">RESTART</button>
+            <button class="button red">CLOSE</button>
+        </div>
+        <div class="console-container"></div>
+        <input type="text" class="command-input" placeholder="Type a command and press Enter">
+        <div class="error-message"></div>
+    </main>
+    <!-- SayfanÄ±n iÃ§eriÄi -->
+
+<div style="margin-top: 40px;">
+    <footer style="color: #8b9496; font-size: 12px; margin-top: 20px;">
+        &copy; 2024 Warfdev - ExamplePanel
+    </footer>
+</div>
+</body>
+</html>
